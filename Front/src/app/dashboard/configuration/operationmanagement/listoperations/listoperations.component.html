@@ -1,0 +1,103 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+<div class="container mt-5">
+    <div class="row">
+           <div class="col-lg-6">
+               <h1> liste des opérations</h1>
+           </div>
+
+
+           <div class="col-lg-2 ms-auto mt-2">
+<button class="btn btn-dark" routerLink="/dashboard/operations/ajoutoperation"> nouvelle operation</button>
+           </div>
+    </div>
+    
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+        <input type="text" [(ngModel)]="operationSearch" (input)="filterByoperation()" placeholder="Rechercher"> 
+       
+      </div>
+        
+      
+      
+      </div>
+   
+      <button class="btn btn-dark" (click)="printTable()">
+        <i class="fas fa-print"></i> Imprimer
+      </button>
+
+      <button class="btn btn-primary" (click)="exportToExcel()" aria-label="Exporter">
+        <i class="bi bi-file-earmark-arrow-down"></i>
+        <span class="ms-2 d-none d-md-inline">Exporter</span>
+      </button>
+      
+
+    <div class="row mt-3" >
+      
+      
+        <table class="table" >
+
+        <thead>
+            <tr>
+             <th>#</th>
+             <th>DESIGNATION</th>
+             <th>DATE CREATION</th>
+             <th>DATE MISE À JOUR</th>
+             
+             <th> OPTIONS</th>
+             </tr>
+        </thead>
+        
+        <tbody>
+
+            <tr *ngFor="let item of operationsFiltered; let i=index">
+
+            <td>{{i+1}}</td>
+            <td>{{item.description_operation}}</td>
+            <td>{{item. date_de_creation}}</td>
+            <td>{{item. date_mise_a_jour}}</td>
+            
+            <td>
+              <button (click)="delete(item.description_operation)" class="btn btn-danger" >supprimer</button>
+              <button class="btn btn-info ms-2" [routerLink]="['/dashboard/operations/updateoperation' , item.description_operation]" >modifier</button>
+              
+
+            </td>
+        </tr>
+        </tbody>
+
+            
+
+    
+
+
+
+          
+        </table>
+
+
+        <!-- Ajoutez le composant de pagination en dessous de la table -->
+<div class="row mt-3">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="changePage(currentPage - 1)">precedent</button>
+        </li>
+        <li class="page-item" *ngFor="let page of totalPages; let i = index" [class.active]="currentPage === i + 1">
+          <button class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages.length">
+          <button class="page-link" (click)="changePage(currentPage + 1)">suivant</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+    </div>
+
+
+
+
